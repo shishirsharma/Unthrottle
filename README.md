@@ -1,4 +1,4 @@
-# Unthrottle [![Build Status](https://travis-ci.org/shishirsharma/Unthrottle.svg?branch=master)](https://travis-ci.org/shishirsharma/Unthrottle)
+# Unthrottle [![Build Status](https://travis-ci.org/shishirsharma/Unthrottle.svg?branch=master)](https://travis-ci.org/shishirsharma/Unthrottle) [![Coverage Status](https://coveralls.io/repos/shishirsharma/Unthrottle/badge.svg)](https://coveralls.io/r/shishirsharma/Unthrottle)
 
 Centralized rate limiting for ruby processes sharing a single API using Redis.
 
