@@ -18,7 +18,6 @@ module Unthrottle
       @key = :global            # Api key name
       @rate_limit_time = 60     # Expire time for this key
       @limit = 10               # Api call limit in timeout periode
-      @log_level = Logger::INFO
     end
   end
 
@@ -34,7 +33,6 @@ module Unthrottle
       Redis.new(host: config.host, port: config.port,
                 db: config.db)
     @config.logger ||= Logger.new(STDOUT)
-    @config.logger.level = @config.log_level
   end
 
   # Register an Api Call in redis

@@ -21,25 +21,26 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-    require 'unthrottle'
-    require 'logger'
+require 'logger'
+logger = Logger.new(STDOUT)
+logger.level = Logger::DEBUG
+Unthrottle.configure do |config|
+  config.host = "localhost"
+  config.port = "6379"
+  config.db = "1"
 
-    Unthrottle.configure do |config|
-      config.host = "localhost"
-      config.port = "6379"
-      config.db = "1"
+  config.key = "google_geocoding_api"
+  config.rate_limit_time = 3 # Millisecs
+  config.limit = 3           # Number of api call during timeout
 
-      config.key = "google_geocoding_api"
-      config.rate_limit_time = 3 # Millisecs
-      config.limit = 3           # Number of api call during timeout
+  config.logger = logger
+end
 
-      config.logger = Logger.new(STDOUT)
-    end
-
-    Unthrottle.api(:timeout => 10) {
-       logger.info("this is it")
-       #<Your method call>
-    }
+(1..20).each do |count|
+  Unthrottle.api(:timeout => 30) {
+    logger.info count
+  }
+end
 ```
 
 ## Development
