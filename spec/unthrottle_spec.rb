@@ -26,13 +26,14 @@ describe Unthrottle do
       unthrottle.configure do |config|
         config.host = "localhost"
         config.port = "6379"
-        config.db = "test"
+        config.db = "1"
 
         config.key = "google_geocoding_api"
-        config.rate_limit_time = 3# Millisecs
-        config.limit = 3          # Number of api call during timeout
+        config.rate_limit_time = 3  # Millisecs
+        config.limit = 3            # Number of api call during timeout
 
         config.logger = Logger.new(STDOUT)
+        config.logger.level = Logger::DEBUG
       end
     end
   }
@@ -55,7 +56,8 @@ describe Unthrottle do
           10.times do |api_calls|
             Unthrottle.api(timeout: 3) {
               api_calls += 1
-              $stdout.puts "using google_geocoding_api api_call:#{api_calls} ts:#{Time.now}"
+              logger = Logger.new(STDOUT)
+              logger.info ">>1 using google_geocoding_api api_call:#{api_calls} ts:#{Time.now}"
             }
           end
         }.to raise_exception(Timeout::Error)
@@ -65,9 +67,10 @@ describe Unthrottle do
         api_calls = 0
         expect {
           10.times do
-            Unthrottle.api(timeout: 10) {
+            Unthrottle.api(timeout: 30) {
               api_calls += 1
-              $stdout.puts "using google_geocoding_api api_call:#{api_calls} ts:#{Time.now}"
+              logger = Logger.new(STDOUT)
+              logger.info(">>2 using google_geocoding_api api_call:#{api_calls} ts:#{Time.now}")
             }
           end
         }.not_to raise_exception

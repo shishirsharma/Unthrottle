@@ -22,11 +22,12 @@ Or install it yourself as:
 
 ```ruby
     require 'unthrottle'
+    require 'logger'
 
     Unthrottle.configure do |config|
       config.host = "localhost"
       config.port = "6379"
-      config.db = "test"
+      config.db = "1"
 
       config.key = "google_geocoding_api"
       config.rate_limit_time = 3 # Millisecs
@@ -36,6 +37,7 @@ Or install it yourself as:
     end
 
     Unthrottle.api(:timeout => 10) {
+       logger.info("this is it")
        #<Your method call>
     }
 ```
